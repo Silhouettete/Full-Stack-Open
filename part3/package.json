@@ -1,0 +1,25 @@
+{
+  "name": "phonebook",
+  "version": "1.0.0",
+  "description": "",
+  "main": "phonebook.js",
+  "scripts": {
+    "start": "node phonebook.js",
+    "dev": "node --watch phonebook.js",
+    "test": "\"echo \\\"Error: no test specified\\\" && exit 1\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Silhouettete/FullStackOpen.git"
+  },
+  "author": "Swan Pyae",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Silhouettete/FullStackOpen/issues"
+  },
+  "homepage": "https://github.com/Silhouettete/FullStackOpen#readme",
+  "dependencies": {
+    "express": "^5.1.0",
+    "morgan": "^1.10.0"
+  }
+}
