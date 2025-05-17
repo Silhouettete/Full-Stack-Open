@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import PersonService from "./services/persons";
-
+import "./App.css";
 //Person form component
 const PersonForm = ({
   addPerson,
@@ -40,7 +40,7 @@ const Button = ({ name, id, handleDelete }) => {
     <button
       onClick={() => {
         if (window.confirm(`Delete ${name}?`)) {
-          handleDelete(id);
+          handleDelete(id, name);
         }
       }}
     >
@@ -77,13 +77,23 @@ const App = () => {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [searchName, setSearchName] = useState("");
-
+  const [notification, setNotification] = useState(null);
   //Display all the person in the list by using useEffect hook
   useEffect(() => {
     PersonService.getAll().then((initialPerson) => {
       setPersons(initialPerson);
     });
   }, []);
+  // useEffect(() => {
+  //   if (notification) {
+  //     const timer = setTimeout(() => {
+  //       setNotification(null);
+  //     }, 5000);
+  //     return () => {
+  //       clearTimeout(timer);
+  //     };
+  //   }
+  // }, [notification]);
   //Add a new person by using HTTP POST
   const addPerson = (event) => {
     event.preventDefault();
@@ -122,21 +132,39 @@ const App = () => {
       );
       setNewName("");
       setNewNumber("");
+      setNotification({
+        type: "success",
+        message: `Added ${newName} to the server`,
+      });
     }
   };
 
   //Delete contact by using HTTP Delete
-  const handleDelete = (id) => {
+  const handleDelete = (id, name) => {
     if (!window.confirm("Are you sure you want to delete this person?")) return;
     PersonService.deletePerson(id)
       .then(() => {
         setPersons(persons.filter((person) => person.id !== id));
+        setNotification({
+          type: "error",
+          message: `Information of ${name} has been removed from the server`,
+        });
       })
       .catch((error) => {
-        console.error("Error deleting person:", error);
+        setNotification(error);
       });
   };
+  const Notification = ({ notification }) => {
+    if (notification === null) {
+      return null;
+    }
 
+    return (
+      <div className={`notification ${notification.type}`}>
+        {notification.message}
+      </div>
+    );
+  };
   const handleNameSubmit = (event) => {
     setNewName(event.target.value);
   };
@@ -156,6 +184,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification notification={notification} />
       <Filter searchName={searchName} handleSearch={handleSearch} />
       <h2>Add a new one</h2>
       <PersonForm

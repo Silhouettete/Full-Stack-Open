@@ -11,8 +11,8 @@ const createNewPerson = (newNameObject) => {
   return request.then((response) => response.data);
 };
 
-const updatePersonList = (id, newNameObject) => {
-  const request = axios.put(`${baseUrl}/${id}`, newNameObject);
+const updatePersonList = (name, newNameObject) => {
+  const request = axios.put(`${baseUrl}/${name}`, newNameObject);
   return request.then((response) => response.data);
 };
 
