@@ -11,8 +11,22 @@ mongoose
     console.log("Error connecting to MongoDB", error.message);
   });
 const personSchema = new mongoose.Schema({
-  name: String,
-  number: String,
+  name: {
+    type: String,
+    minlength: [3, "Name is too short"],
+    required: [true, "Name is required"],
+  },
+  number: {
+    type: String,
+    minlength: [8, "Number is not valid"],
+    validate: {
+      validator: function (v) {
+        return /^\d{2,3}-\d+$/.test(v);
+      },
+    },
+    message: (props) => `${props.value} is not a valid phone number!`,
+    required: [true, "Number is required"],
+  },
 });
 personSchema.set("toJSON", {
   transform: (document, returnedObject) => {
