@@ -1,0 +1,9 @@
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+
+{
+  "title": "My Second Blog",
+  "author": "Zero",
+  "url": "https://portfolio-tn46-three.vercel.app/",
+  "likes": 15
+}
