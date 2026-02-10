@@ -13,6 +13,7 @@ beforeEach(async () => {
   blogObject = new Blog(helper.initialBlogs[1]);
   await blogObject.save();
 });
+
 describe("Getting the Blogs", () => {
   test.only("blogs are returned as json", async () => {
     await api
@@ -24,15 +25,18 @@ describe("Getting the Blogs", () => {
   after(async () => {
     await mongoose.connection.close();
   });
+
   test("A specific is within the returned notes", async () => {
     const response = await api.get("/api/blogs");
     const titles = response.body.map((e) => e.title);
     assert.strictEqual(titles.includes("First class tests"));
   });
+
   test.only("all blogs are returned", async () => {
     const response = await api.get("/api/blogs");
     assert.strictEqual(response.body.length, helper.initialBlogs.length);
   });
+
   test.only("blog with unique id", async () => {
     const response = await api.get("/api/blogs");
     response.body.forEach((blog) => {
@@ -41,6 +45,7 @@ describe("Getting the Blogs", () => {
     });
   });
 });
+
 describe("Creating a new blog", () => {
   test("Should add a blog with correct content", async () => {
     const blogAtStart = await helper.blogsInDb();
@@ -67,6 +72,7 @@ describe("Creating a new blog", () => {
     assert.strictEqual(blogAtEnd, blogAtStart.length);
   });
 });
+
 describe("Update the blogs", () => {
   test("update the details of an existing blog", async () => {
     const blogsAtstart = await helper.blogsInDb();
@@ -84,6 +90,7 @@ describe("Update the blogs", () => {
     expect(updatedBlog).toEqual(blogToBeUpdated);
   });
 });
+
 after(async () => {
   await mongoose.connection.close();
 });
