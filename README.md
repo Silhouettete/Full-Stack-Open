@@ -1,1 +1,1 @@
-My follow-along and some exercises from full stack open course @https://fullstackopen.com/en/
+My follow-alongs and some exercises from full stack open course @https://fullstackopen.com/en/
