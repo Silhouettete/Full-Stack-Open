@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "playwright test",
-    "test:report": "playwright show-report"
+    "test:report": "playwright show-report",
+    "cypress:open": "cypress open",
+    "test:e2e": "cypress run"
   },
   "keywords": [],
   "author": "",
@@ -15,5 +17,8 @@
     "@playwright/test": "^1.58.2",
     "@types/node": "^25.2.1",
     "cypress": "^15.10.0"
+  },
+  "dependencies": {
+    "react-router-dom": "^7.13.2"
   }
 }
