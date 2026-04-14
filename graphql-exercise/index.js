@@ -88,7 +88,8 @@ const typeDefs = /* GraphQL */ `
   type Query {
     bookCount: Int!
     authorCount: Int!
-    allBooks(author: String, genre: String): [Book!]!
+    allBooksByAuthors(author: String, genre: String): [Book!]!
+    allBooks: [Book!]!
     allAuthors: [Author!]!
   }
   type Book {
@@ -120,7 +121,8 @@ const resolvers = {
   Query: {
     bookCount: () => books.length,
     authorCount: () => authors.length,
-    allBooks: (root, args) =>
+    allBooks: () => books,
+    allBooksByAuthors: (root, args) =>
       books.filter(
         (book) =>
           book.author === args.author && book.genres.includes(args.genre),
@@ -164,7 +166,7 @@ const server = new ApolloServer({
 });
 
 startStandaloneServer(server, {
-  listen: { port: 4000 },
+  listen: { port: 4001 },
 }).then(({ url }) => {
   console.log(`Server ready at ${url}`);
 });
